@@ -1,0 +1,60 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
+:root {
+  --color-primary: hsl(233, 91%, 69%);
+  --color-primary-hover: hsl(233, 91%, 75%);
+  --color-second: hsl(281, 86%, 69%);
+  --color-second-hover: hsl(281, 86%, 75%);
+  --color-success: hsl(160, 82%, 41%);
+  --color-success-hover: hsl(160, 82%, 47%);
+  --color-info: hsl(210, 97%, 47%);
+  --color-info-hover: hsl(210, 97%, 53%);
+  --color-warning: hsl(20, 99%, 70%);
+  --color-warning-hover: hsl(20, 99%, 75%);
+  --color-danger: hsl(351, 99%, 67%);
+  --color-danger-hover: hsl(351, 99%, 75%);
+
+  --color-font: hsl(0, 0%, 20%);
+
+  // font-family: Inter, Avenir, Helvetica, Arial, sans-serif;
+  // font-size: 16px;
+  // line-height: 1.2;
+  // font-weight: 400;
+
+  /* color-scheme: light dark;
+  color: rgba(255, 255, 255, 0.87);
+  background-color: #242424;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-text-size-adjust: 100%; */
+}
+
+body {
+  font-family: 'Roboto', sans-serif;
+  color: var(--color-font);
+}
+
+a {
+  color: var(--color-primary);
+  transition: color .3s;
+  text-decoration: none;
+}
+
+a:hover,
+a:focus {
+  // color: var(--color-primary-hover);
+}
+
+.row {
+  margin-bottom: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+
+  &_block {
+    display: block;
+  }
+}
