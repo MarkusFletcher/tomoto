@@ -9,7 +9,7 @@ export const useTomotoStore = defineStore('tomotoStore', () => {
   })
 
   const activity = ref(false)
-  const status = ref('work')
+  const stage = ref('work')
 
   const activate = () => {
     activity.value = true
@@ -19,11 +19,16 @@ export const useTomotoStore = defineStore('tomotoStore', () => {
     activity.value = false
   }
 
+  const setStage = (value) => {
+    stage.value = value
+  }
+
   return {
     timeConfig,
     activity,
-    status,
+    stage,
     activate,
-    stop
+    stop,
+    setStage
   }
 })

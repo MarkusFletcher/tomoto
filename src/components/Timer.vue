@@ -3,9 +3,10 @@ import { ref } from 'vue'
 import { useTomotoStore } from '../stores/TomotoStore.js'
 import { TomotoTimer } from '../classes/TomotoTimer.js'
 
-const timer = new TomotoTimer([10,2,2])
-
 const tomotoStore = useTomotoStore()
+
+
+const timer = new TomotoTimer([0.1,0.1,0.1])
 
 const currentMinutes = ref('00')
 const currentSeconds = ref('00')
@@ -17,6 +18,9 @@ const timerStart = () => {
     const sec = timer.getCurrentTime() % 60
     currentMinutes.value = min < 10 ? `0${min}` : min
     currentSeconds.value = sec < 10 ? `0${sec}` : sec
+    if (timer.getCurrentTime() == 0) {
+      tomotoStore.setStage(timer.getCurrentStage())
+    }
   })
 }
 
@@ -35,7 +39,7 @@ const timerStop = () => {
         <span>{{currentSeconds}}</span>
       </div>
       <button class="timer__toggle-btn" v-if="tomotoStore.activity" @click="timerStop">Pause</button>
-      <button class="timer__toggle-btn" v-else @click="timerStart">Restart</button>
+      <button class="timer__toggle-btn" v-else @click="timerStart">Start</button>
     </div>
   </div>
 </template>
@@ -72,6 +76,11 @@ const timerStop = () => {
   &__time {
     font-size: 100px;
     font-weight: bold;
+width: 270px;
+    // position: absolute;
+    // top: 50%;
+    // left: 50%;
+    // transform: translate(-50%, -50%);
   }
   &__toggle-btn {
     background-color: transparent;

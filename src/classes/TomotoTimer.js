@@ -14,10 +14,10 @@ export class TomotoTimer {
   timerStart(callback) {
     this.timer = setInterval(() => {
       if (this.currentTime > 0) {
+        this.currentTime--
         if (typeof callback === 'function') {
           callback(); 
         }
-        this.currentTime--
       } else {
         if (++this.currentStage == this.stageList.length) {
           this.timerStop()
@@ -32,6 +32,9 @@ export class TomotoTimer {
   }
   getCurrentTime() {
     return this.currentTime
+  }
+  getCurrentStage() {
+    return this.stageList[this.currentStage]
   }
 }
 
