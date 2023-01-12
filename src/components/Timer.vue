@@ -1,19 +1,41 @@
 <script setup>
+import { ref } from 'vue'
 import { useTomotoStore } from '../stores/TomotoStore.js'
+import { TomotoTimer } from '../classes/TomotoTimer.js'
+
+const timer = new TomotoTimer([10,2,2])
 
 const tomotoStore = useTomotoStore()
+
+const currentMinutes = ref('00')
+const currentSeconds = ref('00')
+
+const timerStart = () => {
+  tomotoStore.activate()
+  timer.timerStart(() => {
+    const min = Math.floor(timer.getCurrentTime() / 60)
+    const sec = timer.getCurrentTime() % 60
+    currentMinutes.value = min < 10 ? `0${min}` : min
+    currentSeconds.value = sec < 10 ? `0${sec}` : sec
+  })
+}
+
+const timerStop = () => {
+  tomotoStore.stop()
+  timer.timerStop()
+}
 </script>
 
 <template>
 	<div class="timer">
     <div class="timer__inner">
       <div class="timer__time">
-        <span>17</span>
+        <span>{{currentMinutes}}</span>
         <span>:</span>
-        <span>45</span>
+        <span>{{currentSeconds}}</span>
       </div>
-      <button class="timer__toggle-btn" v-if="tomotoStore.activity" @click="tomotoStore.stop">Pause</button>
-      <button class="timer__toggle-btn" v-else @click="tomotoStore.activate">Restart</button>
+      <button class="timer__toggle-btn" v-if="tomotoStore.activity" @click="timerStop">Pause</button>
+      <button class="timer__toggle-btn" v-else @click="timerStart">Restart</button>
     </div>
   </div>
 </template>
@@ -64,6 +86,11 @@ const tomotoStore = useTomotoStore()
 
     position: absolute;
     bottom: 90px;
+    transition: transform .3s;
+
+    &:hover {
+      transform: scale(1.04);
+    }
   }
 }
 </style>
