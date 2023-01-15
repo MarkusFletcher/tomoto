@@ -1,32 +1,32 @@
 <script setup>
 import { ref } from 'vue'
 import { useTomotoStore } from '../stores/TomotoStore.js'
-import { TomotoTimer } from '../classes/TomotoTimer.js'
+import { StepTimer } from '../classes/StepTimer.js'
 
 const tomotoStore = useTomotoStore()
 
 
-const timer = new TomotoTimer([0.1,0.1,0.1])
+const tomotoTimer = new StepTimer(tomotoStore.timeConfig)
 
 const currentMinutes = ref('00')
 const currentSeconds = ref('00')
 
 const timerStart = () => {
   tomotoStore.activate()
-  timer.timerStart(() => {
-    const min = Math.floor(timer.getCurrentTime() / 60)
-    const sec = timer.getCurrentTime() % 60
+  tomotoTimer.start((timer) => {
+    const min = Math.floor(timer.time / 60)
+    const sec = timer.time % 60
     currentMinutes.value = min < 10 ? `0${min}` : min
     currentSeconds.value = sec < 10 ? `0${sec}` : sec
-    if (timer.getCurrentTime() == 0) {
-      tomotoStore.setStage(timer.getCurrentStage())
+    if (timer.time == 0) {
+      tomotoStore.setStage(timer.currentStepName)
     }
   })
 }
 
 const timerStop = () => {
   tomotoStore.stop()
-  timer.timerStop()
+  timer.stop()
 }
 </script>
 
