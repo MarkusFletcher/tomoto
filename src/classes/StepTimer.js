@@ -37,7 +37,7 @@ export class StepTimer {
     if (Array.isArray(sequence)) {
       this._list = []
       sequence.forEach(({name: name, time: time}, idx) => {
-        if (this.stepValidator(name, time)) {
+        if (this._stepValidator(name, time)) {
           const timer = new Timer(time)
           this._list.push({
             idx: idx,
@@ -56,7 +56,7 @@ export class StepTimer {
     }
   }
 
-  stepValidator(name, time) {
+  _stepValidator(name, time) {
     return ((typeof name === 'string') && (typeof time === 'number'))
   }
 
