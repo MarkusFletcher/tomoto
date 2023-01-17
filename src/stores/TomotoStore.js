@@ -25,7 +25,7 @@ export const useTomotoStore = defineStore('tomotoStore', () => {
     },
   ])
 
-  const settingsIsOpen = ref(false)
+  const settingsIsOpen = ref(true)
 
   const openSettings = () => {
     settingsIsOpen.value = true

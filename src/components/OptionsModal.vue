@@ -4,22 +4,33 @@ import { ref } from 'vue'
 import VInputNumber from './ui/InputNumber.vue'
 
 const workTime = ref(25)
+const shortBreakTime = ref(15)
+const longBreakTime = ref(5)
+const isOpen = ref(true)
+
+const close = () => {
+  isOpen.value = false
+}
+
+
 </script>
 
 <template>
-  <div class="overlay">
+  <div class="overlay" v-if="isOpen" >
     <div class="modal">
       <div class="modal__header">
         <h2 class="modal__title">Settings</h2>
-        <div class="modal__close">X</div>
+        <div class="modal__close" @click="close">
+          <img class="modal__close-img" src="../assets/xmark.svg" alt="">
+        </div>
       </div>
       <div class="modal__content">
         <div class="modal__section">
           <h3 class="modal__subtitle">Time (minutes)</h3>
           <div class="modal__times">
-            <v-input-number v-model="workTime"></v-input-number>
-            <v-input-number v-model="workTime"></v-input-number>
-            <v-input-number v-model="workTime"></v-input-number>
+            <v-input-number v-model:value="workTime"></v-input-number>
+            <v-input-number v-model:value="shortBreakTime"></v-input-number>
+            <v-input-number v-model:value="longBreakTime"></v-input-number>
           </div>
         </div>
       </div>
@@ -58,6 +69,15 @@ const workTime = ref(25)
       color: var(--color-font-dark);
       font-size: 28px;
       font-weight: bold;
+    }
+    
+    &__close {
+      cursor: pointer;
+    }
+
+    &__close-img {
+      width: 20px;
+      height: 20px;
     }
 
     &__subtitle {

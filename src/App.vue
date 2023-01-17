@@ -18,7 +18,8 @@ const tomotoStore = useTomotoStore()
     <v-tabs class="tomoto__tabs"></v-tabs>
     <v-timer class="tomoto__timer"></v-timer>
   </div>
-  <v-options-modal v-if="tomotoStore.settingsIsOpen"></v-options-modal>
+  <v-options-modal ></v-options-modal>
+  <!-- v-if="tomotoStore.settingsIsOpen" -->
 </template>
 
 <style scoped lang="scss">

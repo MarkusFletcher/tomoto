@@ -1,15 +1,63 @@
 <script setup>
-  const label = defineProps()
+  //https://codepen.io/sebellows/pen/jLQpZe
+
+  import { ref } from 'vue'
+  const props = defineProps({
+    value: {
+      type: Number,
+      required: true
+    },
+    min: {
+      type: Number,
+      default: -Infinity
+    },
+    max: {
+      type: Number,
+      default: Infinity
+    },
+    step: {
+      type: Number,
+      default: 1
+    },
+    label: {
+      type: Number,
+      required: false
+    }
+  })
+
+  const currentValue = ref(value)
+
+  defineExpose({
+    currentValue
+  })
+
+
+
+  const emit = defineEmits([])
+
+
+  const increment = () => {
+
+  }
+
+  const decrement = () => {
+
+  }
+
+  const _updateValue = (newValue) => {
+    const oldValue = value
+  }
 </script>
 
 <template>
   <div class="input-wrapper">
+    currentValue: {{ value }}
     <div class="input-number">
-      <button type="button">−</button>
-      <span>0</span>
-      <button type="button">+</button>
+      <button type="button" @click="decrement">−</button>
+      <span>{{value}}</span>
+      <button type="button" @click="increment">+</button>
     </div>
-    <div class="label">valus</div>
+    <div class="label">label</div>
   </div>
 </template>
 
@@ -57,7 +105,7 @@
   font-size: 20px;
   cursor: pointer;
   background-color: hsl(229, 14%, 76%);
-  transition: background-color .2s ease;
+  transition: .2s ease;
 }
 
 .input-number button:nth-of-type(1) {
@@ -69,6 +117,7 @@
 }
 
 .input-number button:hover {
-  background-color: rgba(255,255,255,.25);
+  background-color: hsl(231, 28%, 87%);
+  background-color: var(--color-orange);
 }
 </style>
