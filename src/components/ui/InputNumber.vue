@@ -2,6 +2,9 @@
   //https://codepen.io/sebellows/pen/jLQpZe
 
   import { ref } from 'vue'
+
+  const emit = defineEmits(['change'])
+
   const props = defineProps({
     value: {
       type: Number,
@@ -25,27 +28,21 @@
     }
   })
 
-  const currentValue = ref(value)
-
-  defineExpose({
-    currentValue
-  })
-
-
-
-  const emit = defineEmits([])
-
+  const currentValue = ref(props.value)
 
   const increment = () => {
-
+    props.value++
+    // _updateValue(++currentValue.value)
   }
 
   const decrement = () => {
-
+    // _updateValue(--currentValue.value)
   }
 
   const _updateValue = (newValue) => {
-    const oldValue = value
+    const oldValue = currentValue.value
+    currentValue.value = newValue
+    emit('change', currentValue.value)
   }
 </script>
 
@@ -54,7 +51,7 @@
     currentValue: {{ value }}
     <div class="input-number">
       <button type="button" @click="decrement">−</button>
-      <span>{{value}}</span>
+      <span>{{currentValue}}</span>
       <button type="button" @click="increment">+</button>
     </div>
     <div class="label">label</div>

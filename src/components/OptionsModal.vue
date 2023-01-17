@@ -12,7 +12,9 @@ const close = () => {
   isOpen.value = false
 }
 
-
+const changeTest = (val) => {
+  console.log(val)
+}
 </script>
 
 <template>
@@ -28,9 +30,9 @@ const close = () => {
         <div class="modal__section">
           <h3 class="modal__subtitle">Time (minutes)</h3>
           <div class="modal__times">
-            <v-input-number v-model:value="workTime"></v-input-number>
-            <v-input-number v-model:value="shortBreakTime"></v-input-number>
-            <v-input-number v-model:value="longBreakTime"></v-input-number>
+            <v-input-number v-model:value="workTime" @change="val => workTime = val"></v-input-number>
+            <v-input-number v-model:value="shortBreakTime" @change="val => shortBreakTime = val"></v-input-number>
+            <v-input-number v-model:value="longBreakTime" @change="val => longBreakTime = val"></v-input-number>
           </div>
         </div>
       </div>
