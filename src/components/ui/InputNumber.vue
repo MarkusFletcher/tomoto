@@ -1,9 +1,9 @@
 <script setup>
   //https://codepen.io/sebellows/pen/jLQpZe
 
-  import { ref } from 'vue'
+  import { ref, computed } from 'vue'
 
-  const emit = defineEmits(['change'])
+  const emit = defineEmits(['update:value'])
 
   const props = defineProps({
     value: {
@@ -23,38 +23,50 @@
       default: 1
     },
     label: {
-      type: Number,
+      type: String,
       required: false
     }
   })
 
   const currentValue = ref(props.value)
 
+  const disabledMinus = computed(() => {
+    if (currentValue.value == props.min) return true
+    else return false
+  })
+
+  const disabledPlus = computed(() => {
+    if (currentValue.value == props.max) return true
+    else return false
+  })
+
   const increment = () => {
-    props.value++
-    // _updateValue(++currentValue.value)
+    if (disabledPlus.value) return
+    _updateValue(currentValue.value + props.step)
   }
 
   const decrement = () => {
-    // _updateValue(--currentValue.value)
+    if (disabledMinus.value) return
+    _updateValue(currentValue.value - props.step)
   }
 
   const _updateValue = (newValue) => {
-    const oldValue = currentValue.value
+    if (newValue < props.min  || newValue > props.max) {
+      return
+    }
     currentValue.value = newValue
-    emit('change', currentValue.value)
+    emit('update:value', currentValue.value)
   }
 </script>
 
 <template>
   <div class="input-wrapper">
-    currentValue: {{ value }}
     <div class="input-number">
-      <button type="button" @click="decrement">−</button>
-      <span>{{currentValue}}</span>
-      <button type="button" @click="increment">+</button>
+      <button type="button" @click="decrement" :disabled="disabledMinus">−</button>
+      <span>{{ currentValue }}</span>
+      <button type="button" @click="increment" :disabled="disabledPlus">+</button>
     </div>
-    <div class="label">label</div>
+    <div class="label" v-if="props.label">{{ props.label }}</div>
   </div>
 </template>
 
@@ -105,6 +117,11 @@
   transition: .2s ease;
 }
 
+.input-number button:disabled {
+  background-color: hsl(229, 15%, 90%);
+  cursor: default;
+}
+
 .input-number button:nth-of-type(1) {
   padding-right: 20px
 }
@@ -113,7 +130,7 @@
   padding-left: 20px;
 }
 
-.input-number button:hover {
+.input-number button:enabled:hover {
   background-color: hsl(231, 28%, 87%);
   background-color: var(--color-orange);
 }
