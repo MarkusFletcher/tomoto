@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { ref, computed } from 'vue'
+import { ref } from 'vue'
 
 export const useTomotoStore = defineStore('tomotoStore', () => {
 	const timeConfig = ref([
@@ -25,10 +25,14 @@ export const useTomotoStore = defineStore('tomotoStore', () => {
     },
   ])
 
-  const settingsIsOpen = ref(true)
+  const optionsWindowIsOpen = ref(false)
 
-  const openSettings = () => {
-    settingsIsOpen.value = true
+  const toggleOptionsWindow = (value) => {
+    if (typeof value === 'boolean') {
+      optionsWindowIsOpen.value = value
+    } else {
+      optionsWindowIsOpen.value = !optionsWindowIsOpen.value
+    }
   }
 
   const activity = ref(false)
@@ -48,8 +52,8 @@ export const useTomotoStore = defineStore('tomotoStore', () => {
 
   return {
     timeConfig,
-    settingsIsOpen,
-    openSettings,
+    optionsWindowIsOpen,
+    toggleOptionsWindow,
     activity,
     stage,
     activate,

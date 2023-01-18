@@ -1,6 +1,7 @@
 <script setup>
 import VTabs from './components/Tabs.vue'
 import VTimer from './components/Timer.vue'
+import VOptionsButton from './components/OptionsButton.vue'
 import VOptionsModal from './components/OptionsModal.vue'
 
 import { useTomotoStore } from './stores/TomotoStore.js'
@@ -17,8 +18,9 @@ const tomotoStore = useTomotoStore()
   <div class="tomoto">
     <v-tabs class="tomoto__tabs"></v-tabs>
     <v-timer class="tomoto__timer"></v-timer>
+    <v-options-button></v-options-button>
   </div>
-  <v-options-modal ></v-options-modal>
+  <v-options-modal></v-options-modal>
   <!-- v-if="tomotoStore.settingsIsOpen" -->
 </template>
 
@@ -44,7 +46,7 @@ const tomotoStore = useTomotoStore()
       z-index: 10;
     }
     &__timer {
-      margin: 0 auto;
+      margin: 0 auto 40px;
     }
   }
 </style>

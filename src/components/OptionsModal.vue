@@ -1,39 +1,43 @@
 <script setup>
 import { ref } from 'vue'
+import { useTomotoStore } from '../stores/TomotoStore'
 
 import VInputNumber from './ui/InputNumber.vue'
+
+const tomotoStore = useTomotoStore()
 
 const workTime = ref(25)
 const shortBreakTime = ref(15)
 const longBreakTime = ref(5)
-const isOpen = ref(true)
 
 const close = () => {
-  isOpen.value = false
+  tomotoStore.toggleOptionsWindow(false)
 }
 </script>
 
 <template>
-  <div class="overlay" v-if="isOpen" >
-    <div class="modal">
-      <div class="modal__header">
-        <h2 class="modal__title">Settings</h2>
-        <div class="modal__close" @click="close">
-          <img class="modal__close-img" src="../assets/xmark.svg" alt="">
+  <transition>
+    <div class="overlay" v-if="tomotoStore.optionsWindowIsOpen" @click.self="close">
+      <div class="modal">
+        <div class="modal__header">
+          <h2 class="modal__title">Settings</h2>
+          <div class="modal__close" @click="close">
+            <img class="modal__close-img" src="../assets/xmark.svg" alt="">
+          </div>
         </div>
-      </div>
-      <div class="modal__content">
-        <div class="modal__section">
-          <h3 class="modal__subtitle">Time (minutes)</h3>
-          <div class="modal__times">
-            <v-input-number v-model:value="workTime" :min="0" label="work"></v-input-number>
-            <v-input-number v-model:value="shortBreakTime" :min="0" label="short break"></v-input-number>
-            <v-input-number v-model:value="longBreakTime" :min="0" :step="10" label="long break"></v-input-number>
+        <div class="modal__content">
+          <div class="modal__section">
+            <h3 class="modal__subtitle">Time (minutes)</h3>
+            <div class="modal__times">
+              <v-input-number v-model:value="workTime" :min="0" label="work"></v-input-number>
+              <v-input-number v-model:value="shortBreakTime" :min="0" label="short break"></v-input-number>
+              <v-input-number v-model:value="longBreakTime" :min="0" label="long break"></v-input-number>
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
+  </transition>
 </template>
 
 <style lang="scss" scoped>
@@ -94,5 +98,14 @@ const close = () => {
       display: flex;
       gap: 20px;
     }
+  }
+  .v-enter-active,
+  .v-leave-active {
+    transition: opacity 0.3s ease;
+  }
+
+  .v-enter-from,
+  .v-leave-to {
+    opacity: 0;
   }
 </style>
