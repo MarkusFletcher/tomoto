@@ -6,13 +6,13 @@ import { StepTimer } from '../classes/StepTimer.js'
 const tomotoStore = useTomotoStore()
 
 
-const tomotoTimer = new StepTimer(tomotoStore.timeConfig)
+const tomotoTimer = new StepTimer(tomotoStore.sequenc)
 
 const currentMinutes = ref('00')
 const currentSeconds = ref('00')
 
 const timerStart = () => {
-  tomotoStore.activate()
+  tomotoStore.start()
   tomotoTimer.start((timer) => {
     const min = Math.floor(timer.time / 60)
     const sec = timer.time % 60

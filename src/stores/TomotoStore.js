@@ -1,29 +1,32 @@
 import { defineStore } from 'pinia'
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 
 export const useTomotoStore = defineStore('tomotoStore', () => {
-	const timeConfig = ref([
-    {
-      name: 'work',
-      time: 5
-    },
-    {
-      name: 'short break',
-      time: 3
-    },
-    {
-      name: 'work',
-      time: 10
-    },
-    {
-      name: 'long break',
-      time: 3
-    },
-    {
-      name: 'work',
-      time: 10
-    },
-  ])
+  const steps = ref(['work', 'short break', 'work', 'long break', 'work'])
+  const times = ref({
+    work: 15,
+    'short break': 5,
+    'long break': 10
+  })
+
+	const sequenc = computed(() => {
+    let arr = []
+    steps.value.forEach((el) => {
+      console.log(el)
+      arr.push({
+        name: el,
+        time: times.value[el]
+      })
+    })
+    return arr
+  })
+
+  const setTimes = () => {
+  }
+
+  const setWorkTime = (time) => {
+    times.value.work = time
+  }
 
   const optionsWindowIsOpen = ref(false)
 
@@ -38,7 +41,7 @@ export const useTomotoStore = defineStore('tomotoStore', () => {
   const activity = ref(false)
   const stage = ref('work')
 
-  const activate = () => {
+  const start = () => {
     activity.value = true
   }
 
@@ -51,12 +54,12 @@ export const useTomotoStore = defineStore('tomotoStore', () => {
   }
 
   return {
-    timeConfig,
+    sequenc,
     optionsWindowIsOpen,
     toggleOptionsWindow,
     activity,
     stage,
-    activate,
+    start,
     stop,
     setStage
   }
