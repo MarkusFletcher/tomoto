@@ -35,6 +35,9 @@ const close = () => {
             </div>
           </div>
         </div>
+        <div class="modal__actions">
+          <button class="modal__button-apply">Apply</button>
+        </div>
       </div>
     </div>
   </transition>
@@ -97,6 +100,26 @@ const close = () => {
     &__times {
       display: flex;
       gap: 20px;
+    }
+
+    &__actions {
+      transform: translateY(50%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    &__button-apply {
+      $_heigth: 40;
+      color: #fff;
+      text-transform: uppercase;
+      font-weight: bold;
+      height: #{$_heigth}px;
+      min-width: 160px;
+      background-color: var(--color-orange);
+      border: none;
+      border-radius: #{$_heigth}px;
+      cursor: pointer;
     }
   }
   .v-enter-active,
