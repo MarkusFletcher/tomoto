@@ -55,6 +55,7 @@ export const useTomotoStore = defineStore('tomotoStore', () => {
 
   return {
     sequenc,
+    times,
     optionsWindowIsOpen,
     toggleOptionsWindow,
     activity,

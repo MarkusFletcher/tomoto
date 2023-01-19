@@ -6,9 +6,9 @@ import VInputNumber from './ui/InputNumber.vue'
 
 const tomotoStore = useTomotoStore()
 
-const workTime = ref(25)
-const shortBreakTime = ref(15)
-const longBreakTime = ref(5)
+const workTime = ref(tomotoStore.times.work)
+const shortBreakTime = ref(tomotoStore.times['short break'])
+const longBreakTime = ref(tomotoStore.times['long break'])
 
 const close = () => {
   tomotoStore.toggleOptionsWindow(false)
@@ -33,6 +33,7 @@ const close = () => {
               <v-input-number v-model:value="shortBreakTime" :min="0" label="short break"></v-input-number>
               <v-input-number v-model:value="longBreakTime" :min="0" label="long break"></v-input-number>
             </div>
+            <h3 class="modal__subtitle">Sequenc</h3>
           </div>
         </div>
         <div class="modal__actions">
@@ -100,6 +101,7 @@ const close = () => {
     &__times {
       display: flex;
       gap: 20px;
+      margin-bottom: 30px;
     }
 
     &__actions {
@@ -107,6 +109,7 @@ const close = () => {
       display: flex;
       align-items: center;
       justify-content: center;
+      gap: 22px;
     }
 
     &__button-apply {
@@ -120,6 +123,12 @@ const close = () => {
       border: none;
       border-radius: #{$_heigth}px;
       cursor: pointer;
+      transition: transform .2s;
+
+      &:hover,
+      &:focus {
+        transform: translateY(-4px);
+      }
     }
   }
   .v-enter-active,
