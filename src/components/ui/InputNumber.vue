@@ -31,13 +31,11 @@
   const currentValue = ref(props.value)
 
   const disabledMinus = computed(() => {
-    if (currentValue.value == props.min) return true
-    else return false
+    return currentValue.value == props.min
   })
 
   const disabledPlus = computed(() => {
-    if (currentValue.value == props.max) return true
-    else return false
+    return currentValue.value == props.max
   })
 
   const increment = () => {
