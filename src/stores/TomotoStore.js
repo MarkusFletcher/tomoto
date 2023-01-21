@@ -2,7 +2,9 @@ import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
 
 export const useTomotoStore = defineStore('tomotoStore', () => {
+
   const steps = ref(['work', 'short break', 'work', 'long break', 'work'])
+
   const times = ref({
     work: 15,
     'short break': 5,
@@ -21,12 +23,17 @@ export const useTomotoStore = defineStore('tomotoStore', () => {
     return arr
   })
 
-  const setTimes = () => {
+  const setTimes = (values) => {
+    if (Array.isArray(values)) {
+      times.value.work = values[0]
+      times.value['short break'] = values[1]
+      times.value['long break'] = values[2]
+    } else {
+      console.error('Values is non Array')
+    }
   }
-
-  const setWorkTime = (time) => {
-    times.value.work = time
-  }
+  
+  const activity = ref(false)
 
   const optionsWindowIsOpen = ref(false)
 
@@ -38,7 +45,6 @@ export const useTomotoStore = defineStore('tomotoStore', () => {
     }
   }
 
-  const activity = ref(false)
   const stage = ref('work')
 
   const start = () => {
@@ -56,6 +62,7 @@ export const useTomotoStore = defineStore('tomotoStore', () => {
   return {
     sequenc,
     times,
+    setTimes,
     optionsWindowIsOpen,
     toggleOptionsWindow,
     activity,

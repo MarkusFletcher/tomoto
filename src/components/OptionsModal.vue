@@ -10,8 +10,16 @@ const workTime = ref(tomotoStore.times.work)
 const shortBreakTime = ref(tomotoStore.times['short break'])
 const longBreakTime = ref(tomotoStore.times['long break'])
 
+const apply = () => {
+  tomotoStore.setTimes([workTime, shortBreakTime, longBreakTime])
+  close()
+}
+
 const close = () => {
   tomotoStore.toggleOptionsWindow(false)
+  workTime.value = tomotoStore.times.work
+  shortBreakTime.value = tomotoStore.times['short break']
+  longBreakTime.value = tomotoStore.times['long break']
 }
 </script>
 
@@ -37,7 +45,7 @@ const close = () => {
           </div>
         </div>
         <div class="modal__actions">
-          <button class="modal__button-apply">Apply</button>
+          <button class="modal__button-apply" @click="apply">Apply</button>
         </div>
       </div>
     </div>
