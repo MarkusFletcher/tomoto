@@ -26,7 +26,7 @@ const timerStart = () => {
 
 const timerStop = () => {
   tomotoStore.stop()
-  timer.stop()
+  tomotoTimer.stop()
 }
 </script>
 
