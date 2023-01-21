@@ -29,7 +29,7 @@ const stageList = ['tomoto', 'short break', 'long break']
     padding-left: 30px;
     padding-right: 30px;
     border-radius: 24px;
-    cursor: pointer;
+    transition: .3s;
 
     &--active {
       background-color: var(--color-orange);

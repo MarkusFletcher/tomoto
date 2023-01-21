@@ -11,7 +11,7 @@ const shortBreakTime = ref(tomotoStore.times['short break'])
 const longBreakTime = ref(tomotoStore.times['long break'])
 
 const apply = () => {
-  tomotoStore.setTimes([workTime, shortBreakTime, longBreakTime])
+  tomotoStore.setTimes([workTime.value, shortBreakTime.value, longBreakTime.value])
   close()
 }
 
