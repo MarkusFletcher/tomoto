@@ -1,5 +1,5 @@
 <script setup>
-import { ref, computed } from 'vue'
+import { computed } from 'vue'
 import { useTomotoStore } from '../stores/TomotoStore.js'
 
 
@@ -22,15 +22,38 @@ const timerStart = () => {
 const timerStop = () => {
   tomotoStore.stop()
 }
+
+const SIZE = 366
+const STROKE_WIDTH = 10
+const COORDINATE = SIZE / 2
+const RADIUS = (SIZE / 2) - (STROKE_WIDTH * 2)
+const CIRCUMFERENCE = 2 * Math.PI * RADIUS
+
+const progress = computed(() => {
+  return CIRCUMFERENCE - tomotoStore.percent / 100 * CIRCUMFERENCE
+})
 </script>
 
 <template>
 	<div class="timer">
     <div class="timer__inner">
-      <div class="timer__time">
-        <span>{{currentMinutes}}</span>
-        <span>:</span>
-        <span>{{currentSeconds}}</span>
+      <svg class="timer__progress-ring progress-ring" :width="SIZE" :height="SIZE" version="1.1" xmlns="http://www.w3.org/2000/svg">
+        <circle class="progress-ring__circle" 
+          :r="RADIUS" 
+          :cx="183" 
+          :cy="COORDINATE" 
+          :stroke-dashoffset="progress"
+          :stroke-dasharray="`${CIRCUMFERENCE} ${CIRCUMFERENCE}`"
+          fill="transparent"
+          stroke="#F87272"
+          stroke-width="10">
+        </circle>
+      </svg>
+
+      <div class="timer__time time">
+        <span class="time__minutes">{{currentMinutes}}</span>
+        <span class="time__separator">:</span>
+        <span class="time__seconds">{{currentSeconds}}</span>
       </div>
       <button class="timer__toggle-btn" v-if="tomotoStore.isActive" @click="timerStop">Pause</button>
       <button class="timer__toggle-btn" v-else @click="timerStart">Start</button>
@@ -39,6 +62,15 @@ const timerStop = () => {
 </template>
 
 <style lang="scss" scoped>
+.progress-ring {
+  transition: stroke-dashoffset 1s linear;
+  
+  &__circle {
+    transform-origin: center;
+    transform: rotate(-90deg);
+    transition: stroke-dashoffset 1s linear;
+  }
+}
 .timer {
   height: 410px;
   width: 410px;
@@ -53,6 +85,12 @@ const timerStop = () => {
     50px 50px 100px 0px rgba(18,21,48, 1),
     -50px -50px 100px 0px rgba(46,50,90, 1) inset,
     50px 50px 100px 0px rgba(14,17,42, 1) inset;
+
+  &__progress-ring {
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
 
   &__inner {
     height: 366px;
@@ -70,11 +108,6 @@ const timerStop = () => {
   &__time {
     font-size: 100px;
     font-weight: bold;
-width: 270px;
-    // position: absolute;
-    // top: 50%;
-    // left: 50%;
-    // transform: translate(-50%, -50%);
   }
   &__toggle-btn {
     background-color: transparent;
@@ -94,6 +127,20 @@ width: 270px;
     &:hover {
       transform: scale(1.04);
     }
+  }
+}
+
+.time {
+  position: relative;
+  &__minutes,
+  &__seconds {
+    position: absolute;
+  }
+  &__minutes {
+    right: 30px;
+  }
+  &__seconds {
+    left: 30px;
   }
 }
 </style>

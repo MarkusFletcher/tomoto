@@ -41,6 +41,11 @@ export const useTomotoStore = defineStore('tomotoStore', () => {
     return arr
   })
 
+  const percent = computed(() => {
+    console.log()
+    return currentTime.value / 60 / times.value[currentStep.value] * 100
+  })
+
   // !Getters
 
 	// Actions
@@ -64,7 +69,7 @@ export const useTomotoStore = defineStore('tomotoStore', () => {
     tomotoTimer.value.start((timer) => {
       currentTime.value = timer.time
       if (timer.time == 0) {
-        setStage(timer.currentStepName)
+        setCurrentStep(timer.currentStepName)
       }
     })
     isActive.value = true
@@ -77,7 +82,7 @@ export const useTomotoStore = defineStore('tomotoStore', () => {
 
   const restart = () => {
     tomotoTimer.value = NULL
-    currentTime.value = values[0] * 60
+    currentTime.value = times.value.work * 60
   }
 
   const setCurrentStep= (value) => {
@@ -102,6 +107,7 @@ export const useTomotoStore = defineStore('tomotoStore', () => {
     times,
     currentTime,
     currentStep,
+    percent,
     isActive,
     isOpenOptionsWindow,
     start,
