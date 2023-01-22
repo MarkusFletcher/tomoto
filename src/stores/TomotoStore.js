@@ -5,6 +5,8 @@ import { StepTimer } from '../classes/StepTimer.js'
 
 export const useTomotoStore = defineStore('tomotoStore', () => {
 
+  // State
+
   const steps = ref(['work', 'short break', 'work', 'long break', 'work'])
 
   const times = ref({
@@ -15,20 +17,36 @@ export const useTomotoStore = defineStore('tomotoStore', () => {
 
   const currentTime = ref(times.value.work * 60)
 
-	const sequenc = computed(() => {
+  const isActive = ref(false)
+
+  const currentStep = ref('work')
+
+  const tomotoTimer = ref()
+
+  const isOpenOptionsWindow = ref(false)
+
+  // !State
+
+  // Getters
+
+  const sequenc = computed(() => {
     let arr = []
     steps.value.forEach((el) => {
       arr.push({
         name: el,
-        time: times.value[el]
+        time: times.value[el] * 60
       })
     })
+    console.log(arr)
     return arr
   })
 
+  // !Getters
+
+	// Actions
+
   const setTimes = (values) => {
     if (Array.isArray(values)) {
-      console.log(values)
       times.value.work = values[0]
       times.value['short break'] = values[1]
       times.value['long break'] = values[2]
@@ -38,15 +56,10 @@ export const useTomotoStore = defineStore('tomotoStore', () => {
     }
   }
   
-  const activity = ref(false)
-
-  const stage = ref('work')
-
-  const tomotoTimer = ref()
-
   const start = () => {
     console.log('start')
-    tomotoTimer.value = new StepTimer(sequenc.value * 60)
+
+    tomotoTimer.value = new StepTimer(sequenc.value)
     
     tomotoTimer.value.start((timer) => {
       currentTime.value = timer.time
@@ -54,43 +67,47 @@ export const useTomotoStore = defineStore('tomotoStore', () => {
         setStage(timer.currentStepName)
       }
     })
-    activity.value = true
-  }
-
-  const restart = () => {
-    
+    isActive.value = true
   }
 
   const stop = () => {
     tomotoTimer.value.stop()
-    activity.value = false
+    isActive.value = false
   }
 
-  const setStage = (value) => {
-    stage.value = value
+  const restart = () => {
+    tomotoTimer.value = NULL
+    currentTime.value = values[0] * 60
   }
 
-  const optionsWindowIsOpen = ref(false)
-
-  const toggleOptionsWindow = (value) => {
-    if (typeof value === 'boolean') {
-      optionsWindowIsOpen.value = value
+  const setCurrentStep= (value) => {
+    if (steps.value.includes(value)) {
+      currentStep.value = value
     } else {
-      optionsWindowIsOpen.value = !optionsWindowIsOpen.value
+      console.error(`Can't find step "${value}" in steps`)
     }
   }
 
+  const toggleOptionsWindow = (value) => {
+    if (typeof value === 'boolean') {
+      isOpenOptionsWindow.value = value
+    } else {
+      isOpenOptionsWindow.value = !isOpenOptionsWindow.value
+    }
+  }
+
+  // !Actions
+
   return {
-    sequenc,
     times,
-    setTimes,
-    optionsWindowIsOpen,
-    toggleOptionsWindow,
-    activity,
-    stage,
+    currentTime,
+    currentStep,
+    isActive,
+    isOpenOptionsWindow,
     start,
     stop,
-    setStage,
-    currentTime
+    restart,
+    setTimes,
+    toggleOptionsWindow
   }
 })

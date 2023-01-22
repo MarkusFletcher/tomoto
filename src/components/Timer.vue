@@ -32,7 +32,7 @@ const timerStop = () => {
         <span>:</span>
         <span>{{currentSeconds}}</span>
       </div>
-      <button class="timer__toggle-btn" v-if="tomotoStore.activity" @click="timerStop">Pause</button>
+      <button class="timer__toggle-btn" v-if="tomotoStore.isActive" @click="timerStop">Pause</button>
       <button class="timer__toggle-btn" v-else @click="timerStart">Start</button>
     </div>
   </div>

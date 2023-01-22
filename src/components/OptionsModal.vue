@@ -25,7 +25,7 @@ const close = () => {
 
 <template>
   <transition>
-    <div class="overlay" v-if="tomotoStore.optionsWindowIsOpen" @click.self="close">
+    <div class="overlay" v-if="tomotoStore.isOpenOptionsWindow" @click.self="close">
       <div class="modal">
         <div class="modal__header">
           <h2 class="modal__title">Settings</h2>

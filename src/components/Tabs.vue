@@ -7,9 +7,9 @@ const stageList = ['tomoto', 'short break', 'long break']
 
 <template>
 	<div class="tabs">
-    <div class="tabs__item" :class="{'tabs__item--active': tomotoStore.stage == 'work'}">tomoto</div>
-    <div class="tabs__item" :class="{'tabs__item--active': tomotoStore.stage == 'short break'}">short break</div>
-    <div class="tabs__item" :class="{'tabs__item--active': tomotoStore.stage == 'long break'}">long break</div>
+    <div class="tabs__item" :class="{'tabs__item--active': tomotoStore.currentStep== 'work'}">tomoto</div>
+    <div class="tabs__item" :class="{'tabs__item--active': tomotoStore.currentStep== 'short break'}">short break</div>
+    <div class="tabs__item" :class="{'tabs__item--active': tomotoStore.currentStep== 'long break'}">long break</div>
   </div>
 </template>
 
