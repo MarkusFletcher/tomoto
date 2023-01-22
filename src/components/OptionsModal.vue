@@ -42,6 +42,7 @@ const close = () => {
               <v-input-number v-model:value="longBreakTime" :min="0" label="long break"></v-input-number>
             </div>
             <h3 class="modal__subtitle">Sequenc</h3>
+            <h4>TODO</h4>
           </div>
         </div>
         <div class="modal__actions">
